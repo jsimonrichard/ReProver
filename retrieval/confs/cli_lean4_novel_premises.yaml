@@ -14,6 +14,7 @@ trainer:
     init_args:
       name: null
       save_dir: null
+      project: ReProver-reproduction
   gradient_clip_val: 1.0
   max_steps: 800000
   callbacks:

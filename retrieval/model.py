@@ -26,6 +26,12 @@ from common import (
 torch.set_float32_matmul_precision("medium")
 
 
+def make_continguous(model: any) -> None:
+    """Make the model's weights contiguous."""
+    for p in model.parameters():
+        p.data = p.data.contiguous()
+
+
 class PremiseRetriever(pl.LightningModule):
     def __init__(
         self,
@@ -43,6 +49,7 @@ class PremiseRetriever(pl.LightningModule):
         self.max_seq_len = max_seq_len
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.encoder = AutoModelForTextEncoding.from_pretrained(model_name)
+        make_continguous(self.encoder)
         self.embeddings_staled = True
 
     @classmethod
